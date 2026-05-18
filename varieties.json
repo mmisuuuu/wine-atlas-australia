@@ -1,0 +1,44 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Top 15 Grape Varieties in Australian Wine Reviews",
+    "subtitle": "Count of reviews per variety from WineEnthusiast",
+    "fontSize": 16,
+    "anchor": "start"
+  },
+  "width": 500,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_reviews.csv"
+  },
+  "transform": [
+    {
+      "aggregate": [{"op": "count", "as": "review_count"}, {"op": "mean", "field": "points", "as": "avg_points"}],
+      "groupby": ["variety"]
+    },
+    {"filter": "datum.variety != null"},
+    {"window": [{"op": "rank", "as": "rank"}], "sort": [{"field": "review_count", "order": "descending"}]},
+    {"filter": "datum.rank <= 15"}
+  ],
+  "mark": {"type": "bar", "color": "#8B0000"},
+  "encoding": {
+    "y": {
+      "field": "variety",
+      "type": "nominal",
+      "sort": "-x",
+      "title": null,
+      "axis": {"labelFontSize": 11}
+    },
+    "x": {
+      "field": "review_count",
+      "type": "quantitative",
+      "title": "Number of reviews",
+      "axis": {"grid": false}
+    },
+    "tooltip": [
+      {"field": "variety", "type": "nominal", "title": "Variety"},
+      {"field": "review_count", "type": "quantitative", "title": "Reviews"},
+      {"field": "avg_points", "type": "quantitative", "title": "Avg Rating", "format": ".1f"}
+    ]
+  }
+}
