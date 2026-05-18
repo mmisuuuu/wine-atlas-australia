@@ -1,0 +1,61 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Australian Wine Regions by 2024 Grape Crush",
+    "subtitle": "Hover over a region to see details",
+    "fontSize": 16,
+    "anchor": "start"
+  },
+  "width": 700,
+  "height": 500,
+  "projection": {"type": "mercator", "center": [134, -28], "scale": 700},
+  "layer": [
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/australia_outline.geojson",
+        "format": {"type": "json", "property": "features"}
+      },
+      "mark": {
+        "type": "geoshape",
+        "fill": "#f5f0e8",
+        "stroke": "#bbb",
+        "strokeWidth": 0.5
+      }
+    },
+    {
+      "data": {
+        "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_regions.geojson",
+        "format": {"type": "json", "property": "features"}
+      },
+      "transform": [
+        {
+          "lookup": "properties.GI_NAME",
+          "from": {
+            "data": {
+              "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_regions_with_ratings.csv"
+            },
+            "key": "region",
+            "fields": ["state", "crush_2024", "avg_points", "review_count", "mean_jan_temp_c"]
+          }
+        }
+      ],
+      "mark": {"type": "geoshape", "stroke": "white", "strokeWidth": 0.5},
+      "encoding": {
+        "color": {
+          "field": "crush_2024",
+          "type": "quantitative",
+          "scale": {"type": "log", "scheme": "reds"},
+          "title": "2024 Crush (tonnes)",
+          "legend": {"format": ","}
+        },
+        "tooltip": [
+          {"field": "properties.GI_NAME", "type": "nominal", "title": "Region"},
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "crush_2024", "type": "quantitative", "title": "2024 Crush (tonnes)", "format": ","},
+          {"field": "avg_points", "type": "quantitative", "title": "Avg Rating", "format": ".1f"},
+          {"field": "review_count", "type": "quantitative", "title": "Reviews"}
+        ]
+      }
+    }
+  ]
+}
