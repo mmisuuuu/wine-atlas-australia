@@ -1,0 +1,51 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Does Price Predict Quality?",
+    "subtitle": "Each dot is an Australian wine, plotted by price and reviewer score",
+    "fontSize": 16,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_reviews.csv"
+  },
+  "transform": [
+    {"filter": "datum.price != null && datum.points != null"},
+    {
+      "calculate": "indexof(['Shiraz', 'Chardonnay', 'Cabernet Sauvignon', 'Riesling', 'Pinot Noir'], datum.variety) >= 0 ? datum.variety : 'Other'",
+      "as": "variety_grouped"
+    }
+  ],
+  "mark": {"type": "circle", "opacity": 0.6, "size": 60},
+  "encoding": {
+    "x": {
+      "field": "price",
+      "type": "quantitative",
+      "scale": {"type": "log"},
+      "title": "Price (USD, log scale)",
+      "axis": {"format": "$,d"}
+    },
+    "y": {
+      "field": "points",
+      "type": "quantitative",
+      "scale": {"domain": [78, 100]},
+      "title": "Reviewer Score (points)"
+    },
+    "color": {
+      "field": "variety_grouped",
+      "type": "nominal",
+      "title": "Variety",
+      "scale": {"scheme": "category10"}
+    },
+    "tooltip": [
+      {"field": "title", "type": "nominal", "title": "Wine"},
+      {"field": "winery", "type": "nominal", "title": "Winery"},
+      {"field": "variety", "type": "nominal", "title": "Variety"},
+      {"field": "region_1", "type": "nominal", "title": "Region"},
+      {"field": "price", "type": "quantitative", "title": "Price", "format": "$,.0f"},
+      {"field": "points", "type": "quantitative", "title": "Score"}
+    ]
+  }
+}
