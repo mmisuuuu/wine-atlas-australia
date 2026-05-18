@@ -1,0 +1,54 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Wine Production by State, 2020–2025",
+    "subtitle": "Annual grape crush in tonnes (log scale); 2025 is forecast",
+    "fontSize": 16,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_regions.csv"
+  },
+  "transform": [
+    {
+      "fold": ["crush_2020", "crush_2021", "crush_2022", "crush_2023", "crush_2024", "crush_2025_forecast"],
+      "as": ["year_col", "tonnes"]
+    },
+    {
+      "calculate": "datum.year_col == 'crush_2025_forecast' ? '2025' : substring(datum.year_col, 6, 10)",
+      "as": "year"
+    },
+    {
+      "aggregate": [{"op": "sum", "field": "tonnes", "as": "total_crush"}],
+      "groupby": ["state", "year"]
+    }
+  ],
+  "mark": {"type": "line", "strokeWidth": 2.5, "point": true},
+  "encoding": {
+    "x": {
+      "field": "year",
+      "type": "ordinal",
+      "title": "Year"
+    },
+    "y": {
+      "field": "total_crush",
+      "type": "quantitative",
+      "scale": {"type": "log"},
+      "title": "Tonnes Crushed (log scale)",
+      "axis": {"format": ","}
+    },
+    "color": {
+      "field": "state",
+      "type": "nominal",
+      "title": "State",
+      "scale": {"scheme": "tableau10"}
+    },
+    "tooltip": [
+      {"field": "state", "type": "nominal", "title": "State"},
+      {"field": "year", "type": "ordinal"},
+      {"field": "total_crush", "type": "quantitative", "title": "Tonnes", "format": ","}
+    ]
+  }
+}
