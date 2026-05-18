@@ -1,0 +1,37 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "How Consistent Is Each State's Wine Quality?",
+    "subtitle": "Distribution of reviewer scores per state — box shows middle 50%",
+    "fontSize": 16,
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 350,
+  "data": {
+    "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_reviews.csv"
+  },
+  "transform": [
+    {"filter": "datum.province != null && datum.points != null"}
+  ],
+  "mark": {"type": "boxplot", "extent": "min-max"},
+  "encoding": {
+    "y": {
+      "field": "province",
+      "type": "nominal",
+      "title": null
+    },
+    "x": {
+      "field": "points",
+      "type": "quantitative",
+      "scale": {"zero": false, "domain": [78, 100]},
+      "title": "Reviewer Score (points)"
+    },
+    "color": {
+      "field": "province",
+      "type": "nominal",
+      "legend": null,
+      "scale": {"scheme": "tableau10"}
+    }
+  }
+}
