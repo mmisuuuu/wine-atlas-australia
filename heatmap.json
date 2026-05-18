@@ -1,0 +1,58 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Regional Grape Specialisation",
+    "subtitle": "Number of reviews per region × variety (top regions and varieties only)",
+    "fontSize": 16,
+    "anchor": "start"
+  },
+  "width": 500,
+  "height": 400,
+  "data": {
+    "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_reviews.csv"
+  },
+  "transform": [
+    {"filter": "datum.region_1 != null && datum.variety != null"},
+    {
+      "aggregate": [{"op": "count", "as": "n"}],
+      "groupby": ["region_1", "variety"]
+    },
+    {
+      "joinaggregate": [{"op": "sum", "field": "n", "as": "region_total"}],
+      "groupby": ["region_1"]
+    },
+    {
+      "joinaggregate": [{"op": "sum", "field": "n", "as": "variety_total"}],
+      "groupby": ["variety"]
+    },
+    {"filter": "datum.region_total >= 30 && datum.variety_total >= 30"}
+  ],
+  "mark": {"type": "rect", "stroke": "white", "strokeWidth": 1},
+  "encoding": {
+    "y": {
+      "field": "region_1",
+      "type": "nominal",
+      "title": null,
+      "sort": {"op": "sum", "field": "n", "order": "descending"}
+    },
+    "x": {
+      "field": "variety",
+      "type": "nominal",
+      "title": null,
+      "sort": {"op": "sum", "field": "n", "order": "descending"},
+      "axis": {"labelAngle": -45}
+    },
+    "color": {
+      "field": "n",
+      "type": "quantitative",
+      "scale": {"scheme": "reds"},
+      "title": "Reviews",
+      "legend": {"orient": "right"}
+    },
+    "tooltip": [
+      {"field": "region_1", "type": "nominal", "title": "Region"},
+      {"field": "variety", "type": "nominal", "title": "Variety"},
+      {"field": "n", "type": "quantitative", "title": "Reviews"}
+    ]
+  }
+}
