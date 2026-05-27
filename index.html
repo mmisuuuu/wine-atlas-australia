@@ -305,14 +305,14 @@
   </section>
 
   <section class="chart-section">
-    <h2>Climate Shapes Character</h2>
+    <h2>Climate Maps the Industry</h2>
     <div class="lead">
-      <p>Plotting each region by its <strong>growing degree days</strong> against its average reviewer score reveals one of the most consistent patterns in this dataset. Cooler regions cluster up and to the left; warmer regions sit lower and to the right. The size of each circle corresponds to 2024 crush.</p>
-      <p>The country's <strong>biggest producers (Riverland, Murray Darling, Riverina)</strong> are warm, irrigated, and built for scale. The country's <strong>highest-scoring regions (Tasmania, Yarra Valley, Adelaide Hills, Eden Valley)</strong> are cool, marginal, and built for character.</p>
+      <p>Strip a region down to one number and growing degree days is the most useful one. Cool regions sit below 1,500 GDD; temperate ones between 1,500 and 2,000; warm above. Plotting each state's regions along that scale reveals how the industry sorts itself.</p>
+      <p><strong>Tasmania sits in splendid isolation</strong> on the cool end — there is no other state with a region below 1,000 GDD. <strong>Victoria has the widest spread</strong>, from cool Yarra Valley to warm Rutherglen. <strong>South Australia's range is dominated by the Riverland blob</strong> in the warm zone. Western Australia clusters tightly in the temperate band. Queensland is the climatic outlier.</p>
     </div>
     <div class="chart" id="climate"></div>
-    <p class="chart-caption">Figure 8. Region-level bubble chart: warmth (x), avg score (y), 2024 crush (size), state (colour).</p>
-    <div class="insight"><strong>Cool climate makes the quality. Warm climate makes the volume.</strong> The trade-off defines the shape of the industry.</div>
+    <p class="chart-caption">Figure 8. Each dot is a wine region; position = growing degree days, size = 2024 crush, colour = climate zone.</p>
+    <div class="insight"><strong>The structural truth:</strong> states aren't just political units — they're climatic ones. Where a region sits on the GDD axis predicts almost everything else about it: what grapes it grows, how much it crushes, and what price its wine commands.</div>
   </section>
 
   <section class="chart-section">
@@ -341,7 +341,7 @@
     { id: '#slope', file: 'slope.json' },
     { id: '#value', file: 'value_index.json' },
     { id: '#scatter', file: 'scatter.json' },
-    { id: '#climate', file: 'climate_quality.json' },
+    { id: '#climate', file: 'climate_strip.json' },
     { id: '#quality', file: 'quality_distribution.json' }
   ];
   charts.forEach(c => {
