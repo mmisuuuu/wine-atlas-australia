@@ -1,0 +1,78 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Climate Maps the Industry",
+    "subtitle": [
+      "Each dot is a wine region; horizontal position shows its growing degree days (cool → warm).",
+      "Dot size reflects 2024 grape crush. Tasmania anchors the cool end; SA's Riverland the warm."
+    ],
+    "fontSize": 16,
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666",
+    "anchor": "start"
+  },
+  "width": 620,
+  "height": 220,
+  "data": {
+    "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_regions_with_ratings.csv"
+  },
+  "transform": [
+    {"filter": "datum.growing_degree_days != null"},
+    {"calculate": "datum.growing_degree_days < 1500 ? 'Cool' : (datum.growing_degree_days < 2000 ? 'Temperate' : 'Warm')", "as": "climate_zone"}
+  ],
+  "encoding": {
+    "x": {
+      "field": "growing_degree_days",
+      "type": "quantitative",
+      "title": "Growing Degree Days (cool → warm)",
+      "scale": {"domain": [600, 3000]},
+      "axis": {"grid": true, "gridOpacity": 0.25}
+    },
+    "y": {
+      "field": "state",
+      "type": "nominal",
+      "title": null,
+      "sort": ["TAS", "VIC", "WA", "NSW", "SA", "QLD"],
+      "axis": {"labelFontSize": 12, "labelFontWeight": "bold", "domain": false, "ticks": false}
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "circle", "opacity": 0.75, "stroke": "white", "strokeWidth": 1.5},
+      "encoding": {
+        "size": {
+          "field": "crush_2024",
+          "type": "quantitative",
+          "title": "2024 Crush (tonnes)",
+          "scale": {"range": [30, 700], "type": "sqrt"},
+          "legend": {"orient": "bottom", "format": ",.0f"}
+        },
+        "color": {
+          "field": "climate_zone",
+          "type": "nominal",
+          "title": "Climate",
+          "scale": {
+            "domain": ["Cool", "Temperate", "Warm"],
+            "range": ["#5d4e75", "#c9a961", "#7b1d3a"]
+          },
+          "legend": {"orient": "bottom"}
+        },
+        "tooltip": [
+          {"field": "region", "type": "nominal", "title": "Region"},
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "growing_degree_days", "type": "quantitative", "title": "GDD"},
+          {"field": "climate_zone", "type": "nominal", "title": "Climate"},
+          {"field": "crush_2024", "type": "quantitative", "title": "2024 Crush (t)", "format": ",.0f"},
+          {"field": "avg_points", "type": "quantitative", "title": "Avg Score", "format": ".1f"}
+        ]
+      }
+    },
+    {
+      "transform": [{"filter": "datum.region == 'Tasmania' || datum.region == 'Riverland' || datum.region == 'Yarra Valley' || datum.region == 'Rutherglen'"}],
+      "mark": {"type": "text", "dy": -16, "fontSize": 10, "fontStyle": "italic", "color": "#444"},
+      "encoding": {
+        "text": {"field": "region"}
+      }
+    }
+  ]
+}
