@@ -326,6 +326,16 @@
     <div class="insight"><strong>For the consumer:</strong> if you want a near-guaranteed good bottle, narrow the search to a cool-climate state.</div>
   </section>
 
+ <section class="chart-section">
+    <h2>Each Grape Has Its Champions</h2>
+    <div class="lead">
+      <p>One last cut through the data. The atlas began by showing <em>where</em> Australia makes wine, then <em>what</em>, then <em>how much</em>, then <em>how good</em>. The final question: <strong>which region is best at each grape</strong>?</p>
+      <p>Five mini panels, one per major variety, each showing the five regions that score highest. The answers are partly intuitive — <strong>Barossa Valley owns Shiraz</strong>, <strong>Margaret River owns Chardonnay</strong> — and partly surprising. <strong>Great Southern</strong>, a sparsely-reviewed Western Australian region, narrowly tops the Cabernet Sauvignon ranking ahead of household names. <strong>Frankland River</strong> beats Eden and Clare Valleys for Riesling. The data rewards looking past the famous labels.</p>
+    </div>
+    <div class="chart" id="champions"></div>
+    <p class="chart-caption">Figure 10. Top 5 highest-scoring regions for each of the five most-reviewed Australian grape varieties. Aggregated live from individual reviews; minimum 5 reviews per region-variety pair.</p>
+    <div class="insight"><strong>Specialisation pays.</strong> When a region matches the right grape to its soil and climate, the difference shows up in the scores — and not always in the regions you expect.</div>
+  </section>
 </div>
 
 <footer>
@@ -342,7 +352,8 @@
     { id: '#value', file: 'value_index.json' },
     { id: '#scatter', file: 'scatter.json' },
     { id: '#climate', file: 'climate_strip.json' },
-    { id: '#quality', file: 'quality_distribution.json' }
+    { id: '#quality', file: 'quality_distribution.json' },
+    { id: '#champions', file: 'champions.json' }
   ];
   charts.forEach(c => {
     vegaEmbed(c.id, c.file, { renderer: 'svg', actions: true })
