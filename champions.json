@@ -3,14 +3,16 @@
   "title": {
     "text": "Each Grape Has Its Champions",
     "subtitle": [
-      "Top 5 regions for each of the five most-reviewed Australian grape varieties, ranked by average expert score.",
-      "Aggregated live from individual reviews; region-variety pairs with at least 5 reviews only."
+      "For each major variety, the top 5 regions by average expert score.",
+      "Hover any dot for region, score, review count and price. The leftmost dot in each row is the variety's #1 region."
     ],
     "fontSize": 16,
     "subtitleFontSize": 11,
     "subtitleColor": "#666",
     "anchor": "start"
   },
+  "width": 560,
+  "height": 240,
   "data": {
     "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_reviews.csv"
   },
@@ -33,18 +35,39 @@
     },
     {"filter": "datum.rank <= 5"}
   ],
-  "config": {"concat": {"spacing": 18}},
-  "vconcat": [
+  "encoding": {
+    "y": {
+      "field": "variety",
+      "type": "nominal",
+      "title": null,
+      "sort": ["Shiraz", "Chardonnay", "Cabernet Sauvignon", "Riesling", "Pinot Noir"],
+      "axis": {"labelFontSize": 12, "labelFontWeight": "bold", "domain": false, "ticks": false, "labelPadding": 8}
+    },
+    "x": {
+      "field": "avg_score",
+      "type": "quantitative",
+      "title": "Average Reviewer Score",
+      "scale": {"domain": [85, 92]},
+      "axis": {"grid": true, "gridOpacity": 0.25}
+    }
+  },
+  "layer": [
     {
-      "title": {"text": "Shiraz", "anchor": "start", "fontSize": 14, "color": "#7b1d3a"},
-      "transform": [{"filter": "datum.variety == 'Shiraz'"}],
-      "width": 500, "height": 110,
-      "mark": {"type": "bar", "color": "#7b1d3a", "cornerRadiusEnd": 3, "stroke": "white", "strokeWidth": 1},
+      "mark": {"type": "circle", "size": 240, "opacity": 0.85, "stroke": "white", "strokeWidth": 1.5},
       "encoding": {
-        "y": {"field": "region_1", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelFontSize": 11, "labelLimit": 150}},
-        "x": {"field": "avg_score", "type": "quantitative", "scale": {"domain": [85, 92]}, "title": null, "axis": {"labelFontSize": 9, "grid": true, "gridOpacity": 0.25, "tickCount": 6}},
+        "color": {
+          "field": "variety",
+          "type": "nominal",
+          "scale": {
+            "domain": ["Shiraz", "Chardonnay", "Cabernet Sauvignon", "Riesling", "Pinot Noir"],
+            "range": ["#7b1d3a", "#c9a961", "#5d4e75", "#3a7d44", "#c44569"]
+          },
+          "legend": null
+        },
         "tooltip": [
+          {"field": "variety", "type": "nominal", "title": "Variety"},
           {"field": "region_1", "type": "nominal", "title": "Region"},
+          {"field": "rank", "type": "quantitative", "title": "Rank within variety"},
           {"field": "avg_score", "type": "quantitative", "title": "Avg Score", "format": ".2f"},
           {"field": "n_reviews", "type": "quantitative", "title": "Reviews"},
           {"field": "avg_price", "type": "quantitative", "title": "Avg Price (USD)", "format": "$.0f"}
@@ -52,69 +75,11 @@
       }
     },
     {
-      "title": {"text": "Chardonnay", "anchor": "start", "fontSize": 14, "color": "#a08742"},
-      "transform": [{"filter": "datum.variety == 'Chardonnay'"}],
-      "width": 500, "height": 110,
-      "mark": {"type": "bar", "color": "#c9a961", "cornerRadiusEnd": 3, "stroke": "white", "strokeWidth": 1},
+      "transform": [{"filter": "datum.rank == 1"}],
+      "mark": {"type": "text", "align": "left", "dx": 12, "fontSize": 10, "fontWeight": "bold", "color": "#3A2A30"},
       "encoding": {
-        "y": {"field": "region_1", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelFontSize": 11, "labelLimit": 150}},
-        "x": {"field": "avg_score", "type": "quantitative", "scale": {"domain": [85, 92]}, "title": null, "axis": {"labelFontSize": 9, "grid": true, "gridOpacity": 0.25, "tickCount": 6}},
-        "tooltip": [
-          {"field": "region_1", "type": "nominal", "title": "Region"},
-          {"field": "avg_score", "type": "quantitative", "title": "Avg Score", "format": ".2f"},
-          {"field": "n_reviews", "type": "quantitative", "title": "Reviews"},
-          {"field": "avg_price", "type": "quantitative", "title": "Avg Price (USD)", "format": "$.0f"}
-        ]
-      }
-    },
-    {
-      "title": {"text": "Cabernet Sauvignon", "anchor": "start", "fontSize": 14, "color": "#5d4e75"},
-      "transform": [{"filter": "datum.variety == 'Cabernet Sauvignon'"}],
-      "width": 500, "height": 110,
-      "mark": {"type": "bar", "color": "#5d4e75", "cornerRadiusEnd": 3, "stroke": "white", "strokeWidth": 1},
-      "encoding": {
-        "y": {"field": "region_1", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelFontSize": 11, "labelLimit": 150}},
-        "x": {"field": "avg_score", "type": "quantitative", "scale": {"domain": [85, 92]}, "title": null, "axis": {"labelFontSize": 9, "grid": true, "gridOpacity": 0.25, "tickCount": 6}},
-        "tooltip": [
-          {"field": "region_1", "type": "nominal", "title": "Region"},
-          {"field": "avg_score", "type": "quantitative", "title": "Avg Score", "format": ".2f"},
-          {"field": "n_reviews", "type": "quantitative", "title": "Reviews"},
-          {"field": "avg_price", "type": "quantitative", "title": "Avg Price (USD)", "format": "$.0f"}
-        ]
-      }
-    },
-    {
-      "title": {"text": "Riesling", "anchor": "start", "fontSize": 14, "color": "#3a7d44"},
-      "transform": [{"filter": "datum.variety == 'Riesling'"}],
-      "width": 500, "height": 110,
-      "mark": {"type": "bar", "color": "#3a7d44", "cornerRadiusEnd": 3, "stroke": "white", "strokeWidth": 1},
-      "encoding": {
-        "y": {"field": "region_1", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelFontSize": 11, "labelLimit": 150}},
-        "x": {"field": "avg_score", "type": "quantitative", "scale": {"domain": [85, 92]}, "title": null, "axis": {"labelFontSize": 9, "grid": true, "gridOpacity": 0.25, "tickCount": 6}},
-        "tooltip": [
-          {"field": "region_1", "type": "nominal", "title": "Region"},
-          {"field": "avg_score", "type": "quantitative", "title": "Avg Score", "format": ".2f"},
-          {"field": "n_reviews", "type": "quantitative", "title": "Reviews"},
-          {"field": "avg_price", "type": "quantitative", "title": "Avg Price (USD)", "format": "$.0f"}
-        ]
-      }
-    },
-    {
-      "title": {"text": "Pinot Noir", "anchor": "start", "fontSize": 14, "color": "#c44569"},
-      "transform": [{"filter": "datum.variety == 'Pinot Noir'"}],
-      "width": 500, "height": 110,
-      "mark": {"type": "bar", "color": "#c44569", "cornerRadiusEnd": 3, "stroke": "white", "strokeWidth": 1},
-      "encoding": {
-        "y": {"field": "region_1", "type": "nominal", "sort": "-x", "title": null, "axis": {"labelFontSize": 11, "labelLimit": 150}},
-        "x": {"field": "avg_score", "type": "quantitative", "scale": {"domain": [85, 92]}, "title": "Avg Score", "axis": {"labelFontSize": 9, "grid": true, "gridOpacity": 0.25, "tickCount": 6}},
-        "tooltip": [
-          {"field": "region_1", "type": "nominal", "title": "Region"},
-          {"field": "avg_score", "type": "quantitative", "title": "Avg Score", "format": ".2f"},
-          {"field": "n_reviews", "type": "quantitative", "title": "Reviews"},
-          {"field": "avg_price", "type": "quantitative", "title": "Avg Price (USD)", "format": "$.0f"}
-        ]
+        "text": {"field": "region_1"}
       }
     }
-  ],
-  "resolve": {"scale": {"y": "independent"}}
+  ]
 }
