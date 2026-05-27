@@ -4,7 +4,7 @@
     "text": "Each Grape Has Its Champions",
     "subtitle": [
       "Top 5 regions for each of the five most-reviewed Australian grape varieties, ranked by average expert score.",
-      "Aggregated from individual reviews; region-variety pairs with at least 5 reviews only."
+      "Aggregated live from individual reviews; region-variety pairs with at least 5 reviews only."
     ],
     "fontSize": 16,
     "subtitleFontSize": 11,
@@ -33,55 +33,54 @@
     },
     {"filter": "datum.rank <= 5"}
   ],
-  "facet": {
-    "field": "variety",
-    "type": "nominal",
-    "columns": 3,
-    "title": null,
-    "header": {
-      "labelFontSize": 13,
-      "labelFontWeight": "bold",
-      "labelColor": "#3A2A30",
-      "labelAnchor": "start",
-      "labelPadding": 6
+  "mark": {"type": "bar", "cornerRadiusEnd": 3, "stroke": "white", "strokeWidth": 1},
+  "width": 200,
+  "height": 130,
+  "encoding": {
+    "facet": {
+      "field": "variety",
+      "type": "nominal",
+      "columns": 3,
+      "title": null,
+      "header": {
+        "labelFontSize": 13,
+        "labelFontWeight": "bold",
+        "labelColor": "#3A2A30",
+        "labelAnchor": "start",
+        "labelPadding": 6
+      },
+      "sort": ["Shiraz", "Chardonnay", "Cabernet Sauvignon", "Riesling", "Pinot Noir"]
     },
-    "sort": ["Shiraz", "Chardonnay", "Cabernet Sauvignon", "Riesling", "Pinot Noir"]
-  },
-  "spec": {
-    "width": 180,
-    "height": 120,
-    "mark": {"type": "bar", "cornerRadiusEnd": 3, "stroke": "white", "strokeWidth": 1},
-    "encoding": {
-      "y": {
-        "field": "region_1",
-        "type": "nominal",
-        "sort": "-x",
-        "title": null,
-        "axis": {"labelFontSize": 10, "labelLimit": 130}
+    "y": {
+      "field": "region_1",
+      "type": "nominal",
+      "sort": "-x",
+      "title": null,
+      "axis": {"labelFontSize": 10, "labelLimit": 130}
+    },
+    "x": {
+      "field": "avg_score",
+      "type": "quantitative",
+      "scale": {"domain": [85, 92]},
+      "title": "Avg Score",
+      "axis": {"labelFontSize": 9, "titleFontSize": 10, "grid": true, "gridOpacity": 0.25, "tickCount": 4}
+    },
+    "color": {
+      "field": "variety",
+      "type": "nominal",
+      "scale": {
+        "domain": ["Shiraz", "Chardonnay", "Cabernet Sauvignon", "Riesling", "Pinot Noir"],
+        "range": ["#7b1d3a", "#c9a961", "#5d4e75", "#3a7d44", "#c44569"]
       },
-      "x": {
-        "field": "avg_score",
-        "type": "quantitative",
-        "scale": {"domain": [85, 92]},
-        "title": "Avg Score",
-        "axis": {"labelFontSize": 9, "titleFontSize": 10, "grid": true, "gridOpacity": 0.25, "tickCount": 4}
-      },
-      "color": {
-        "field": "variety",
-        "type": "nominal",
-        "scale": {
-          "domain": ["Shiraz", "Chardonnay", "Cabernet Sauvignon", "Riesling", "Pinot Noir"],
-          "range": ["#7b1d3a", "#c9a961", "#5d4e75", "#3a7d44", "#c44569"]
-        },
-        "legend": null
-      },
-      "tooltip": [
-        {"field": "region_1", "type": "nominal", "title": "Region"},
-        {"field": "variety", "type": "nominal", "title": "Variety"},
-        {"field": "avg_score", "type": "quantitative", "title": "Avg Score", "format": ".2f"},
-        {"field": "n_reviews", "type": "quantitative", "title": "Reviews"},
-        {"field": "avg_price", "type": "quantitative", "title": "Avg Price (USD)", "format": "$.0f"}
-      ]
-    }
+      "legend": null
+    },
+    "tooltip": [
+      {"field": "region_1", "type": "nominal", "title": "Region"},
+      {"field": "variety", "type": "nominal", "title": "Variety"},
+      {"field": "avg_score", "type": "quantitative", "title": "Avg Score", "format": ".2f"},
+      {"field": "n_reviews", "type": "quantitative", "title": "Reviews"},
+      {"field": "avg_price", "type": "quantitative", "title": "Avg Price (USD)", "format": "$.0f"}
+    ],
+    "yOffset": {"field": "region_1"}
   }
 }
