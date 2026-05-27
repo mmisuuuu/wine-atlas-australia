@@ -1,0 +1,90 @@
+{
+  "$schema": "https://vega.github.io/schema/vega-lite/v5.json",
+  "title": {
+    "text": "Where Do You Get the Most Quality per Dollar?",
+    "subtitle": [
+      "Value Index = average reviewer score ÷ log10(average price). Higher = more points per log-dollar.",
+      "Filtered to regions with at least 10 expert reviews for statistical credibility."
+    ],
+    "fontSize": 16,
+    "subtitleFontSize": 11,
+    "subtitleColor": "#666",
+    "anchor": "start"
+  },
+  "width": 600,
+  "height": 420,
+  "data": {
+    "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_regions_with_ratings.csv"
+  },
+  "transform": [
+    {"filter": "datum.avg_points != null && datum.avg_price != null && datum.review_count >= 10"},
+    {"calculate": "datum.avg_points / log(datum.avg_price + 1) * 2.302585", "as": "value_index"},
+    {
+      "window": [{"op": "rank", "as": "rank"}],
+      "sort": [{"field": "value_index", "order": "descending"}]
+    }
+  ],
+  "encoding": {
+    "y": {
+      "field": "region",
+      "type": "nominal",
+      "sort": {"field": "value_index", "order": "descending"},
+      "title": null,
+      "axis": {"labelFontSize": 11, "labelLimit": 150}
+    },
+    "x": {
+      "field": "value_index",
+      "type": "quantitative",
+      "scale": {"domain": [40, 70]},
+      "title": "Value Index (higher = better value)",
+      "axis": {"grid": true, "gridOpacity": 0.3}
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "rule", "stroke": "#cccccc", "strokeWidth": 2},
+      "encoding": {
+        "x": {"datum": 40},
+        "x2": {"field": "value_index"}
+      }
+    },
+    {
+      "mark": {"type": "circle", "size": 220, "stroke": "white", "strokeWidth": 1.5},
+      "encoding": {
+        "color": {
+          "field": "state",
+          "type": "nominal",
+          "title": "State",
+          "scale": {
+            "domain": ["SA", "VIC", "NSW", "WA", "TAS", "QLD"],
+            "range": ["#7b1d3a", "#c44569", "#e8a5a0", "#5d4e75", "#3a7d44", "#d4a574"]
+          },
+          "legend": {"orient": "right", "symbolType": "circle"}
+        },
+        "tooltip": [
+          {"field": "region", "type": "nominal", "title": "Region"},
+          {"field": "state", "type": "nominal", "title": "State"},
+          {"field": "value_index", "type": "quantitative", "title": "Value Index", "format": ".1f"},
+          {"field": "avg_points", "type": "quantitative", "title": "Avg Score", "format": ".1f"},
+          {"field": "avg_price", "type": "quantitative", "title": "Avg Price (USD)", "format": "$.0f"},
+          {"field": "review_count", "type": "quantitative", "title": "Reviews", "format": ".0f"},
+          {"field": "rank", "type": "quantitative", "title": "Value Rank"}
+        ]
+      }
+    },
+    {
+      "transform": [{"filter": "datum.rank == 1"}],
+      "mark": {
+        "type": "text",
+        "align": "left",
+        "dx": 14,
+        "fontSize": 10,
+        "fontStyle": "italic",
+        "color": "#7b1d3a"
+      },
+      "encoding": {
+        "text": {"value": "← best value: high score, low price"}
+      }
+    }
+  ]
+}
