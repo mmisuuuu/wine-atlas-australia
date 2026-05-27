@@ -7,7 +7,7 @@
     "anchor": "start"
   },
   "width": 600,
-  "height": 400,
+  "height": 280,
   "data": {
     "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_regions_with_ratings.csv"
   },
