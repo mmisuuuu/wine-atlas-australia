@@ -17,66 +17,29 @@
     "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_regions_with_ratings.csv"
   },
   "transform": [
-    {
-      "aggregate": [
-        {"op": "sum", "field": "crush_2020", "as": "y_2020"},
-        {"op": "sum", "field": "crush_2025_forecast", "as": "y_2025"}
-      ],
-      "groupby": ["state"]
-    },
+    {"aggregate": [{"op": "sum", "field": "crush_2020", "as": "y_2020"}, {"op": "sum", "field": "crush_2025_forecast", "as": "y_2025"}], "groupby": ["state"]},
     {"calculate": "(datum.y_2025 - datum.y_2020) / datum.y_2020 * 100", "as": "pct_change"},
     {"calculate": "datum.pct_change >= 0 ? 'Growing' : 'Shrinking'", "as": "direction"},
-    {
-      "fold": ["y_2020", "y_2025"],
-      "as": ["year_key", "tonnes"]
-    },
+    {"fold": ["y_2020", "y_2025"], "as": ["year_key", "tonnes"]},
     {"calculate": "datum.year_key === 'y_2020' ? '2020' : '2025'", "as": "year"},
     {"calculate": "datum.year_key === 'y_2025' ? datum.state + ' ' + (datum.pct_change >= 0 ? '+' : '') + format(datum.pct_change, '.0f') + '%' : datum.state", "as": "endpoint_label"}
   ],
   "encoding": {
-    "x": {
-      "field": "year",
-      "type": "ordinal",
-      "scale": {"padding": 0.5},
-      "axis": {"labelFontSize": 13, "labelFontWeight": "bold", "title": null, "orient": "top", "domain": false, "ticks": false}
-    },
-    "y": {
-      "field": "tonnes",
-      "type": "quantitative",
-      "scale": {"type": "log"},
-      "title": "Total grape crush (tonnes, log scale)",
-      "axis": {"format": ",", "grid": true, "gridOpacity": 0.2}
-    }
+    "x": {"field": "year", "type": "ordinal", "scale": {"padding": 0.5}, "axis": {"labelFontSize": 13, "labelFontWeight": "bold", "title": null, "orient": "top", "domain": false, "ticks": false}},
+    "y": {"field": "tonnes", "type": "quantitative", "scale": {"type": "log"}, "title": "Total grape crush (tonnes, log scale)", "axis": {"format": ",", "grid": true, "gridOpacity": 0.2}}
   },
   "layer": [
     {
       "mark": {"type": "line", "strokeWidth": 2.5, "opacity": 0.85},
       "encoding": {
         "detail": {"field": "state"},
-        "color": {
-          "field": "direction",
-          "type": "nominal",
-          "title": "Direction",
-          "scale": {
-            "domain": ["Growing", "Shrinking"],
-            "range": ["#3a7d44", "#c44569"]
-          },
-          "legend": {"orient": "bottom-right", "symbolType": "stroke"}
-        }
+        "color": {"field": "direction", "type": "nominal", "title": "Direction", "scale": {"domain": ["Growing", "Shrinking"], "range": ["#3a7d44", "#c44569"]}, "legend": {"orient": "bottom-right", "symbolType": "stroke"}}
       }
     },
     {
       "mark": {"type": "circle", "size": 110, "stroke": "white", "strokeWidth": 1.5},
       "encoding": {
-        "color": {
-          "field": "direction",
-          "type": "nominal",
-          "scale": {
-            "domain": ["Growing", "Shrinking"],
-            "range": ["#3a7d44", "#c44569"]
-          },
-          "legend": null
-        },
+        "color": {"field": "direction", "type": "nominal", "scale": {"domain": ["Growing", "Shrinking"], "range": ["#3a7d44", "#c44569"]}, "legend": null},
         "tooltip": [
           {"field": "state", "type": "nominal", "title": "State"},
           {"field": "year", "type": "ordinal", "title": "Year"},
@@ -88,25 +51,20 @@
     {
       "transform": [{"filter": "datum.year === '2020'"}],
       "mark": {"type": "text", "align": "right", "dx": -10, "fontSize": 11, "fontWeight": 500},
-      "encoding": {
-        "text": {"field": "state"},
-        "color": {"value": "#444"}
-      }
+      "encoding": {"text": {"field": "state"}, "color": {"value": "#444"}}
     },
     {
       "transform": [{"filter": "datum.year === '2025'"}],
       "mark": {"type": "text", "align": "left", "dx": 10, "fontSize": 11, "fontWeight": 600},
+      "encoding": {"text": {"field": "endpoint_label"}, "color": {"field": "direction", "type": "nominal", "scale": {"domain": ["Growing", "Shrinking"], "range": ["#3a7d44", "#c44569"]}, "legend": null}}
+    },
+    {
+      "data": {"values": [{"year": "2025", "tonnes": 5000}]},
+      "mark": {"type": "text", "align": "center", "fontSize": 11, "fontWeight": "bold", "color": "#3a7d44"},
       "encoding": {
-        "text": {"field": "endpoint_label"},
-        "color": {
-          "field": "direction",
-          "type": "nominal",
-          "scale": {
-            "domain": ["Growing", "Shrinking"],
-            "range": ["#3a7d44", "#c44569"]
-          },
-          "legend": null
-        }
+        "x": {"field": "year", "type": "ordinal"},
+        "y": {"field": "tonnes", "type": "quantitative"},
+        "text": {"value": ["Tasmania: the", "cool-climate boom"]}
       }
     }
   ]
