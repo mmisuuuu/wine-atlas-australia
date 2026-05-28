@@ -35,7 +35,7 @@
       }
     },
     {
-      "data": {"values": [{"x": 1.6, "y": 97.5}]},
+      "data": {"values": [{"x": 1.2, "y": 99}]},
       "mark": {"type": "text", "align": "left", "fontSize": 12, "fontWeight": "bold", "color": "#2a7d44", "lineHeight": 14},
       "encoding": {
         "x": {"field": "x", "type": "quantitative"},
@@ -44,7 +44,7 @@
       }
     },
     {
-      "data": {"values": [{"x1": 2.0, "y1": 96.6, "x2": 11, "y2": 93.2}]},
+      "data": {"values": [{"x1": 1.5, "y1": 98, "x2": 13, "y2": 92.5}]},
       "mark": {"type": "rule", "color": "#2a7d44", "strokeWidth": 1.5},
       "encoding": {
         "x": {"field": "x1", "type": "quantitative"},
