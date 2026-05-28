@@ -13,36 +13,17 @@
   },
   "transform": [
     {"filter": "datum.price != null && datum.points != null"},
-    {
-      "calculate": "indexof(['Shiraz', 'Chardonnay', 'Cabernet Sauvignon', 'Riesling', 'Pinot Noir'], datum.variety) >= 0 ? datum.variety : 'Other'",
-      "as": "variety_grouped"
-    }
+    {"calculate": "indexof(['Shiraz', 'Chardonnay', 'Cabernet Sauvignon', 'Riesling', 'Pinot Noir'], datum.variety) >= 0 ? datum.variety : 'Other'", "as": "variety_grouped"}
   ],
   "encoding": {
-    "x": {
-      "field": "price",
-      "type": "quantitative",
-      "scale": {"type": "log"},
-      "title": "Price (USD, log scale)",
-      "axis": {"format": "$,d"}
-    },
-    "y": {
-      "field": "points",
-      "type": "quantitative",
-      "scale": {"domain": [78, 100]},
-      "title": "Reviewer Score (points)"
-    }
+    "x": {"field": "price", "type": "quantitative", "scale": {"type": "log"}, "title": "Price (USD, log scale)", "axis": {"format": "$,d"}},
+    "y": {"field": "points", "type": "quantitative", "scale": {"domain": [78, 100]}, "title": "Reviewer Score (points)"}
   },
   "layer": [
     {
       "mark": {"type": "circle", "opacity": 0.6, "size": 60},
       "encoding": {
-        "color": {
-          "field": "variety_grouped",
-          "type": "nominal",
-          "title": "Variety",
-          "scale": {"scheme": "category10"}
-        },
+        "color": {"field": "variety_grouped", "type": "nominal", "title": "Variety", "scale": {"scheme": "category10"}},
         "tooltip": [
           {"field": "title", "type": "nominal", "title": "Wine"},
           {"field": "winery", "type": "nominal", "title": "Winery"},
@@ -54,16 +35,16 @@
       }
     },
     {
-      "data": {"values": [{"x": 17, "y": 95.5}]},
-      "mark": {"type": "text", "align": "left", "fontSize": 12, "fontWeight": "bold", "color": "#2a7d44"},
+      "data": {"values": [{"x": 1.6, "y": 97.5}]},
+      "mark": {"type": "text", "align": "left", "fontSize": 12, "fontWeight": "bold", "color": "#2a7d44", "lineHeight": 14},
       "encoding": {
         "x": {"field": "x", "type": "quantitative"},
         "y": {"field": "y", "type": "quantitative"},
-        "text": {"value": ["Best value lives here:", "92+ points under $25"]}
+        "text": {"value": ["Best value lives here:", "high score, low price"]}
       }
     },
     {
-      "data": {"values": [{"x1": 18, "y1": 94.8, "x2": 15, "y2": 92.5}]},
+      "data": {"values": [{"x1": 2.0, "y1": 96.6, "x2": 11, "y2": 93.2}]},
       "mark": {"type": "rule", "color": "#2a7d44", "strokeWidth": 1.5},
       "encoding": {
         "x": {"field": "x1", "type": "quantitative"},
