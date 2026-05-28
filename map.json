@@ -51,7 +51,7 @@
       }
     },
     {
-      "data": {"values": [{"lon": 144.3, "lat": -33.4, "lon2": 140.6, "lat2": -34.1}]},
+      "data": {"values": [{"lon": 149.5, "lat": -38.5, "lon2": 140.8, "lat2": -34.2}]},
       "mark": {"type": "rule", "color": "#7b1d3a", "strokeWidth": 1.5},
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
@@ -61,7 +61,7 @@
       }
     },
     {
-      "data": {"values": [{"lon": 144.5, "lat": -33.0}]},
+      "data": {"values": [{"lon": 148, "lat": -39.5}]},
       "mark": {"type": "text", "align": "left", "fontSize": 11, "fontWeight": "bold", "color": "#7b1d3a"},
       "encoding": {
         "longitude": {"field": "lon", "type": "quantitative"},
