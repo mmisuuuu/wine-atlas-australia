@@ -18,7 +18,6 @@
       "as": "variety_grouped"
     }
   ],
-  "mark": {"type": "circle", "opacity": 0.6, "size": 60},
   "encoding": {
     "x": {
       "field": "price",
@@ -32,20 +31,46 @@
       "type": "quantitative",
       "scale": {"domain": [78, 100]},
       "title": "Reviewer Score (points)"
+    }
+  },
+  "layer": [
+    {
+      "mark": {"type": "circle", "opacity": 0.6, "size": 60},
+      "encoding": {
+        "color": {
+          "field": "variety_grouped",
+          "type": "nominal",
+          "title": "Variety",
+          "scale": {"scheme": "category10"}
+        },
+        "tooltip": [
+          {"field": "title", "type": "nominal", "title": "Wine"},
+          {"field": "winery", "type": "nominal", "title": "Winery"},
+          {"field": "variety", "type": "nominal", "title": "Variety"},
+          {"field": "region_1", "type": "nominal", "title": "Region"},
+          {"field": "price", "type": "quantitative", "title": "Price", "format": "$,.0f"},
+          {"field": "points", "type": "quantitative", "title": "Score"}
+        ]
+      }
     },
-    "color": {
-      "field": "variety_grouped",
-      "type": "nominal",
-      "title": "Variety",
-      "scale": {"scheme": "category10"}
+    {
+      "data": {"values": [{"x": 17, "y": 95.5}]},
+      "mark": {"type": "text", "align": "left", "fontSize": 12, "fontWeight": "bold", "color": "#2a7d44"},
+      "encoding": {
+        "x": {"field": "x", "type": "quantitative"},
+        "y": {"field": "y", "type": "quantitative"},
+        "text": {"value": ["Best value lives here:", "92+ points under $25"]}
+      }
     },
-    "tooltip": [
-      {"field": "title", "type": "nominal", "title": "Wine"},
-      {"field": "winery", "type": "nominal", "title": "Winery"},
-      {"field": "variety", "type": "nominal", "title": "Variety"},
-      {"field": "region_1", "type": "nominal", "title": "Region"},
-      {"field": "price", "type": "quantitative", "title": "Price", "format": "$,.0f"},
-      {"field": "points", "type": "quantitative", "title": "Score"}
-    ]
-  }
+    {
+      "data": {"values": [{"x1": 18, "y1": 94.8, "x2": 15, "y2": 92.5}]},
+      "mark": {"type": "rule", "color": "#2a7d44", "strokeWidth": 1.5},
+      "encoding": {
+        "x": {"field": "x1", "type": "quantitative"},
+        "y": {"field": "y1", "type": "quantitative"},
+        "x2": {"field": "x2"},
+        "y2": {"field": "y2"}
+      }
+    }
+  ]
 }
