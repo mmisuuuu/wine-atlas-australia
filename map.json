@@ -15,12 +15,7 @@
         "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/australia_outline.geojson",
         "format": {"type": "json", "property": "features"}
       },
-      "mark": {
-        "type": "geoshape",
-        "fill": "#f5f0e8",
-        "stroke": "#bbb",
-        "strokeWidth": 0.5
-      }
+      "mark": {"type": "geoshape", "fill": "#f5f0e8", "stroke": "#bbb", "strokeWidth": 0.5}
     },
     {
       "data": {
@@ -31,9 +26,7 @@
         {
           "lookup": "properties.GI_NAME",
           "from": {
-            "data": {
-              "url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_regions_with_ratings.csv"
-            },
+            "data": {"url": "https://raw.githubusercontent.com/mmisuuuu/wine-atlas-australia/main/wine_regions_with_ratings.csv"},
             "key": "region",
             "fields": ["state", "crush_2024", "avg_points", "review_count", "mean_jan_temp_c"]
           }
@@ -55,6 +48,25 @@
           {"field": "avg_points", "type": "quantitative", "title": "Avg Rating", "format": ".1f"},
           {"field": "review_count", "type": "quantitative", "title": "Reviews"}
         ]
+      }
+    },
+    {
+      "data": {"values": [{"lon": 144.3, "lat": -33.4, "lon2": 140.6, "lat2": -34.1}]},
+      "mark": {"type": "rule", "color": "#7b1d3a", "strokeWidth": 1.5},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "longitude2": {"field": "lon2"},
+        "latitude2": {"field": "lat2"}
+      }
+    },
+    {
+      "data": {"values": [{"lon": 144.5, "lat": -33.0}]},
+      "mark": {"type": "text", "align": "left", "fontSize": 11, "fontWeight": "bold", "color": "#7b1d3a"},
+      "encoding": {
+        "longitude": {"field": "lon", "type": "quantitative"},
+        "latitude": {"field": "lat", "type": "quantitative"},
+        "text": {"value": ["Riverland (SA):", "443,000 t — the", "national crush leader"]}
       }
     }
   ]
